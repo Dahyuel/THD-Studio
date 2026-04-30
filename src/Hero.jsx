@@ -69,9 +69,6 @@ export default function Hero({ onVideoReady }) {
             muted
             playsInline
             onEnded={next}
-            onLoadedData={() => {
-              if (onVideoReady) onVideoReady();
-            }}
             onCanPlayThrough={() => {
               if (onVideoReady) onVideoReady();
             }}

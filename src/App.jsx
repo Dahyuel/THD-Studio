@@ -14,14 +14,6 @@ function App() {
   const [videoReady, setVideoReady] = useState(false);
   const [loadingComplete, setLoadingComplete] = useState(false);
 
-  // Safety fallback: if video doesn't emit loaded event within 5s, force ready
-  useEffect(() => {
-    const fallback = setTimeout(() => {
-      setVideoReady(true);
-    }, 5000);
-    return () => clearTimeout(fallback);
-  }, []);
-
   useEffect(() => {
     const handleScrollAndResize = () => {
       // Show sticky menu if we've scrolled past 90vh OR if it's a mobile screen
