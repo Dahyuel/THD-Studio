@@ -1,14 +1,26 @@
 import { useState, useEffect } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import Hero from './Hero'
 import About from './About'
 import Gallery from './Gallery'
 import Contact from './Contact'
 import Footer from './Footer'
 import StaggeredMenu from './StaggeredMenu'
+import Preloader from './Preloader'
 
 function App() {
   const [showStickyMenu, setShowStickyMenu] = useState(false);
   const [theme, setTheme] = useState('dark'); // 'dark' means black background (yellow icons), 'light' means yellow background (black icons)
+  const [videoReady, setVideoReady] = useState(false);
+  const [loadingComplete, setLoadingComplete] = useState(false);
+
+  // Safety fallback: if video doesn't emit loaded event within 5s, force ready
+  useEffect(() => {
+    const fallback = setTimeout(() => {
+      setVideoReady(true);
+    }, 5000);
+    return () => clearTimeout(fallback);
+  }, []);
 
   useEffect(() => {
     const handleScrollAndResize = () => {
@@ -41,7 +53,16 @@ function App() {
 
   return (
     <div className="w-full bg-black min-h-screen relative">
-      <Hero />
+      <AnimatePresence>
+        {!loadingComplete && (
+          <Preloader 
+            isReady={videoReady} 
+            onComplete={() => setLoadingComplete(true)} 
+          />
+        )}
+      </AnimatePresence>
+
+      <Hero onVideoReady={() => setVideoReady(true)} />
       <About />
       <Gallery />
       <Contact />

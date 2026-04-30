@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const slides = [
@@ -16,7 +16,7 @@ const slides = [
   },
 ];
 
-export default function Hero() {
+export default function Hero({ onVideoReady }) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const [hoveredNav, setHoveredNav] = useState(null);
@@ -24,13 +24,11 @@ export default function Hero() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   // Update isMobile on resize
-  import('react').then(({ useEffect }) => {
-    useEffect(() => {
-      const handleResize = () => setIsMobile(window.innerWidth < 768);
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
-  });
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const goTo = (idx) => {
     setDirection(idx > current ? 1 : -1);
@@ -71,6 +69,12 @@ export default function Hero() {
             muted
             playsInline
             onEnded={next}
+            onLoadedData={() => {
+              if (onVideoReady) onVideoReady();
+            }}
+            onCanPlayThrough={() => {
+              if (onVideoReady) onVideoReady();
+            }}
             className="absolute inset-0 w-full h-full object-cover z-0"
             style={{ transform: 'translateZ(0)' }}
             initial={{ opacity: 0 }}
