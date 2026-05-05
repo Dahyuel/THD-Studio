@@ -14,6 +14,12 @@ const slides = [
     subtitle: 'Timeless interior landscapes',
     body: 'Spaces that breathe — where materiality meets the quiet poetry of light and form.',
   },
+  {
+    video: '/Pool.mp4',
+    videoMobile: '', // Add mobile video name here later
+    subtitle: 'Tranquil aquatic environments',
+    body: 'Blurring the boundaries between interior comfort and outdoor serenity.',
+  },
 ];
 
 export default function Hero({ onVideoReady }) {
