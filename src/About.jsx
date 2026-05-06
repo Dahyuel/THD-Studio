@@ -62,28 +62,28 @@ const ServiceCard = ({ service, index }) => {
       initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, ease: 'easeOut', delay: index * 0.12 }}
-      className="group relative flex flex-col border border-white/10 shadow-[0_0_15px_rgba(226,230,29,0.25)] rounded-2xl p-8 hover:bg-white/5 hover:shadow-[0_0_25px_rgba(226,230,29,0.4)] transition-all duration-500 cursor-default"
+      className="group relative flex flex-col border border-black/80 rounded-2xl p-8 hover:bg-black transition-colors duration-500 cursor-default"
     >
       {/* Number + Icon row */}
       <div className="flex items-center justify-between mb-8">
-        <span className="font-mono text-xs tracking-[0.2em] text-white/30 group-hover:text-white/60 transition-colors duration-500">
+        <span className="font-mono text-xs tracking-[0.2em] text-black/30 group-hover:text-white/30 transition-colors duration-500">
           {service.number}
         </span>
-        <span className="text-white group-hover:text-[#E2E61D] transition-colors duration-500">
+        <span className="text-black group-hover:text-[#E2E61D] transition-colors duration-500">
           {service.icon}
         </span>
       </div>
 
       {/* Title */}
-      <h3 className="font-poppins font-semibold text-xl tracking-tight text-white group-hover:text-[#E2E61D] transition-colors duration-500 mb-3">
+      <h3 className="font-poppins font-semibold text-xl tracking-tight text-black group-hover:text-white transition-colors duration-500 mb-3">
         {service.title}
       </h3>
 
       {/* Divider */}
-      <div className="w-8 h-px bg-white/25 group-hover:bg-[#E2E61D]/50 transition-colors duration-500 mb-4" />
+      <div className="w-8 h-px bg-black/25 group-hover:bg-white/25 transition-colors duration-500 mb-4" />
 
       {/* Description */}
-      <p className="font-poppins text-sm text-white/50 group-hover:text-white/80 transition-colors duration-500 leading-relaxed mb-8">
+      <p className="font-poppins text-sm text-black/50 group-hover:text-white/50 transition-colors duration-500 leading-relaxed mb-8">
         {service.description}
       </p>
 
@@ -92,9 +92,9 @@ const ServiceCard = ({ service, index }) => {
         {service.items.map((item) => (
           <li
             key={item}
-            className="flex items-center gap-2 font-poppins text-xs tracking-wide text-white/70 group-hover:text-white transition-colors duration-500"
+            className="flex items-center gap-2 font-poppins text-xs tracking-wide text-black/70 group-hover:text-white/70 transition-colors duration-500"
           >
-            <span className="w-1 h-1 rounded-full bg-white/40 group-hover:bg-[#E2E61D]/80 transition-colors duration-500 shrink-0" />
+            <span className="w-1 h-1 rounded-full bg-black/40 group-hover:bg-white/40 transition-colors duration-500 shrink-0" />
             {item}
           </li>
         ))}
@@ -123,7 +123,7 @@ export default function About() {
     <section
       ref={containerRef}
       id="about"
-      className="w-full bg-zinc-800 relative overflow-hidden flex flex-col items-center justify-center py-24 px-8"
+      className="w-full bg-[#E2E61D] relative overflow-hidden flex flex-col items-center justify-center py-24 px-8"
     >
       {/* ── Background Decorations ── */}
       <div className="absolute inset-0 pointer-events-none">
@@ -131,8 +131,8 @@ export default function About() {
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)
+              linear-gradient(to right, rgba(0,0,0,0.07) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(0,0,0,0.07) 1px, transparent 1px)
             `,
             backgroundSize: '40px 40px',
           }}
@@ -140,7 +140,7 @@ export default function About() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)',
+            backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.13) 1px, transparent 1px)',
             backgroundSize: '40px 40px',
             backgroundPosition: '-1px -1px',
           }}
@@ -149,36 +149,36 @@ export default function About() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 0.04, scale: 1 }}
           transition={{ duration: 1.5, ease: 'easeOut' }}
-          className="absolute -left-32 -top-32 w-[500px] h-[500px] rounded-full border-[40px] border-white"
+          className="absolute -left-32 -top-32 w-[500px] h-[500px] rounded-full border-[40px] border-black"
         />
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 0.03, scale: 1 }}
           transition={{ duration: 1.5, ease: 'easeOut', delay: 0.3 }}
-          className="absolute -right-24 -bottom-24 w-[350px] h-[350px] rounded-full border-[30px] border-white"
+          className="absolute -right-24 -bottom-24 w-[350px] h-[350px] rounded-full border-[30px] border-black"
         />
         <motion.div
           animate={{ y: [0, -12, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-16 right-24 w-3 h-3 bg-white rounded-full opacity-30"
+          className="absolute top-16 right-24 w-3 h-3 bg-black rounded-full opacity-30"
         />
         <motion.div
           animate={{ y: [0, 14, 0] }}
           transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          className="absolute bottom-28 right-40 w-2 h-2 bg-white rounded-full opacity-20"
+          className="absolute bottom-28 right-40 w-2 h-2 bg-black rounded-full opacity-20"
         />
         <motion.div
           animate={{ y: [0, -8, 0] }}
           transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-          className="absolute top-1/2 left-16 w-2 h-2 bg-white rounded-full opacity-20"
+          className="absolute top-1/2 left-16 w-2 h-2 bg-black rounded-full opacity-20"
         />
-        <div className="absolute top-16 left-1/2 -translate-x-1/2 w-px h-16 bg-white/10" />
+        <div className="absolute top-16 left-1/2 -translate-x-1/2 w-px h-16 bg-black/10" />
       </div>
 
       {/* ── Content ── */}
       <div className="relative z-10 flex flex-col items-center w-full max-w-6xl">
         {/* Heading */}
-        <h2 className="text-4xl md:text-6xl lg:text-[5rem] font-poppins font-semibold text-white text-center max-w-5xl leading-[1.15] tracking-tight">
+        <h2 className="text-4xl md:text-6xl lg:text-[5rem] font-poppins font-semibold text-black text-center max-w-5xl leading-[1.15] tracking-tight">
           {words.map((word, i) => {
             const start = i * step;
             const end = Math.min(start + step * 1.4, 1);
@@ -196,7 +196,7 @@ export default function About() {
           initial={{ opacity: 0, y: 18 }}
           animate={captionInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-          className="text-white/50 text-base md:text-lg text-center max-w-xl mt-8 font-poppins font-semibold leading-relaxed"
+          className="text-black/50 text-base md:text-lg text-center max-w-xl mt-8 font-poppins font-semibold leading-relaxed"
         >
           We craft unique spaces that seamlessly blend your vision with timeless design,
           ensuring every detail reflects your personality and aspirations.
