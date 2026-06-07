@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { useInView } from 'framer-motion';
 import './Masonry.css';
 
 const useMedia = (queries, values, defaultValue) => {
@@ -30,12 +31,44 @@ const useMeasure = () => {
 };
 
 const preloadImages = async urls => {
-  await Promise.all(
-    urls.map(src => new Promise(resolve => {
-      const img = new Image();
-      img.src = src;
-      img.onload = img.onerror = () => resolve();
-    }))
+  const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+  await Promise.race([
+    Promise.all(
+      urls.map(src => new Promise(resolve => {
+        const img = new Image();
+        img.src = encodeURI(src);
+        img.onload = img.onerror = () => resolve();
+      }))
+    ),
+    timeout(4000) // safety: render grid after 4s even if some images are still loading
+  ]);
+};
+
+// Sub-component for lazy loading grid item images
+const GridItem = ({ item, REVEAL_RADIUS, onItemClick, handleItemMouseEnter, handleItemMouseLeave }) => {
+  const ref = useRef(null);
+  // Start loading image when it is within 400px of the viewport
+  const isInView = useInView(ref, { once: true, margin: '400px' });
+
+  return (
+    <div
+      ref={ref}
+      data-key={item.id}
+      className="item-wrapper bg-[#111]"
+      style={{ '--item-x': `${item.x}px`, '--item-y': `${item.y}px`, borderRadius: '10px' }}
+      onClick={() => onItemClick ? onItemClick(item) : null}
+      onMouseEnter={(e) => handleItemMouseEnter(item, e)}
+      onMouseLeave={() => handleItemMouseLeave(item)}
+    >
+      {isInView && (
+        <>
+          {/* Grayscale base layer */}
+          <div className="item-img item-img-gray" style={{ backgroundImage: `url('${item.img}')` }} />
+          {/* Full-color layer — revealed in a circle around the cursor */}
+          <div className="item-img item-img-color" style={{ backgroundImage: `url('${item.img}')`, '--r': `${REVEAL_RADIUS}px` }} />
+        </>
+      )}
+    </div>
   );
 };
 
@@ -83,7 +116,9 @@ const Masonry = ({
   };
 
   useEffect(() => {
-    preloadImages(items.map(i => i.img)).then(() => setImagesReady(true));
+    // Only preload the first 4 images to get the grid started instantly
+    const initialBatch = items.slice(0, 4).map(i => i.img);
+    preloadImages(initialBatch).then(() => setImagesReady(true));
   }, [items]);
 
   const grid = useMemo(() => {
@@ -179,20 +214,14 @@ const Masonry = ({
       onMouseLeave={handleMouseLeave}
     >
       {grid.map(item => (
-        <div
+        <GridItem
           key={item.id}
-          data-key={item.id}
-          className="item-wrapper"
-          style={{ '--item-x': `${item.x}px`, '--item-y': `${item.y}px` }}
-          onClick={() => onItemClick ? onItemClick(item) : null}
-          onMouseEnter={(e) => handleItemMouseEnter(item, e)}
-          onMouseLeave={() => handleItemMouseLeave(item)}
-        >
-          {/* Grayscale base layer */}
-          <div className="item-img item-img-gray" style={{ backgroundImage: `url(${item.img})` }} />
-          {/* Full-color layer — revealed in a circle around the cursor */}
-          <div className="item-img item-img-color" style={{ backgroundImage: `url(${item.img})`, '--r': `${REVEAL_RADIUS}px` }} />
-        </div>
+          item={item}
+          REVEAL_RADIUS={REVEAL_RADIUS}
+          onItemClick={onItemClick}
+          handleItemMouseEnter={handleItemMouseEnter}
+          handleItemMouseLeave={handleItemMouseLeave}
+        />
       ))}
     </div>
   );

@@ -75,9 +75,9 @@ function App() {
             { label: 'Contact', ariaLabel: 'Get in touch', link: '#contact' }
           ]}
           socialItems={[
-            { label: 'LinkedIn', link: '#' },
-            { label: 'Instagram', link: '#' },
-            { label: 'Facebook', link: '#' }
+            { label: 'LinkedIn', link: 'https://www.linkedin.com/company/64627923' },
+            { label: 'Instagram', link: 'https://www.instagram.com/thdstudio.eg/' },
+            { label: 'Facebook', link: 'https://www.facebook.com/profile.php?id=100064107966174' }
           ]}
           displaySocials={true}
           displayItemNumbering={true}

@@ -2,42 +2,8 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Masonry from './Masonry';
 import ProjectModal, { ProjectTooltip } from './ProjectModal';
+import { galleryItems } from './projectsData';
 
-// Mock metadata for gallery items
-const galleryItems = [
-  { 
-    id: '1', 
-    title: 'The Serene Pavilion',
-    location: 'Kyoto, Japan',
-    category: 'Architecture',
-    description: 'A minimalist wooden pavilion designed to blend seamlessly with its natural surroundings, featuring expansive glass walls that blur the line between indoors and out.',
-    tags: ['Minimalist', 'Wood', 'Nature Integration'],
-    img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=750&fit=crop&q=80', 
-    url: '#', 
-    height: 380 
-  },
-  { 
-    id: '2', 
-    title: 'Urban Oasis Penthouse',
-    location: 'New York, USA',
-    category: 'Interior Design',
-    description: 'A luxurious penthouse overlooking the city skyline. The interior features a striking balance of dark marbles, warm brass accents, and custom acoustic paneling.',
-    tags: ['Luxury', 'Urban', 'Acoustics'],
-    img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&h=750&fit=crop&q=80', 
-    url: '#', 
-    height: 360 
-  },
-  { id: '3', title: 'Nordic Light Villa', location: 'Oslo, Norway', category: 'Architecture', description: 'Embracing the principles of Scandinavian design, this villa maximizes natural light through strategically placed skylights and a stark, beautiful monochromatic palette.', tags: ['Scandinavian', 'Light', 'Monochrome'], img: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=1200&h=750&fit=crop&q=80', url: '#', height: 400 },
-  { id: '4', title: 'Modern Brutalist Home', location: 'São Paulo, Brazil', description: 'Raw concrete meets warm timber in this striking brutalist residence.', category: 'Architecture', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=750&fit=crop&q=80', url: '#', height: 360 },
-  { id: '5', title: 'Coastal Retreat', location: 'Malibu, USA', description: 'A seamless indoor-outdoor living experience right on the coast.', category: 'Execution', img: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=1200&h=750&fit=crop&q=80', url: '#', height: 420 },
-  { id: '6', title: 'Minimalist Loft', location: 'Berlin, Germany', description: 'An industrial loft converted into a sleek, minimalist living space.', category: 'Interior Design', img: 'https://images.unsplash.com/photo-1604014237800-1c9102c219da?w=1200&h=750&fit=crop&q=80', url: '#', height: 360 },
-  { id: '7', title: 'Desert Courtyard House', location: 'Scottsdale, USA', description: 'Designed around a central courtyard to provide shade and natural cooling.', category: 'Architecture', img: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&h=750&fit=crop&q=80', url: '#', height: 380 },
-  { id: '8', title: 'Heritage Renovation', location: 'London, UK', description: 'Careful restoration of a Victorian home with a modern glass extension.', category: 'Execution', img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&h=750&fit=crop&q=80', url: '#', height: 360 },
-  { id: '9', title: 'Alpine Chalet', location: 'Chamonix, France', description: 'A contemporary take on the traditional alpine chalet using local stone.', category: 'Architecture', img: 'https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=1200&h=750&fit=crop&q=80', url: '#', height: 400 },
-  { id: '10', title: 'Glass Box Studio', location: 'Tokyo, Japan', description: 'A compact, transparent workspace designed for a local artist.', category: 'Interior Design', img: 'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=1200&h=750&fit=crop&q=80', url: '#', height: 360 },
-  { id: '11', title: 'Sustainable Eco-Lodge', location: 'Costa Rica', description: 'Off-grid eco-lodge built entirely from sustainable and reclaimed materials.', category: 'Execution', img: 'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&h=750&fit=crop&q=80', url: '#', height: 380 },
-  { id: '12', title: 'Zen Garden Home', location: 'Kyoto, Japan', description: 'A residence that frames carefully curated internal zen gardens.', category: 'Architecture', img: 'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=1200&h=750&fit=crop&q=80', url: '#', height: 360 },
-];
 
 export default function Gallery() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -45,7 +11,7 @@ export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const categories = ['All', 'Architecture', 'Interior Design', 'Execution'];
+  const categories = ['All', 'Interior Design', 'Architecture', 'Execution'];
 
   const handleCategoryChange = (cat) => {
     if (cat === activeCategory) return;
@@ -84,7 +50,7 @@ export default function Gallery() {
               key={cat}
               onClick={() => handleCategoryChange(cat)}
               disabled={isTransitioning}
-              className={`relative flex-1 md:flex-none whitespace-nowrap rounded-full px-1 md:px-6 py-2.5 font-poppins text-[0.5rem] sm:text-[0.55rem] md:text-xs tracking-wider uppercase transition-colors duration-300 font-bold z-10 ${
+              className={`relative flex-1 md:flex-none whitespace-nowrap rounded-full px-2 sm:px-4 md:px-6 py-2 md:py-2.5 font-poppins text-[0.6rem] sm:text-[0.65rem] md:text-xs tracking-wider uppercase transition-colors duration-300 font-bold z-10 ${
                 activeCategory === cat 
                   ? 'text-black' 
                   : 'text-white/60 hover:text-white hover:bg-white/10 scale-95 hover:scale-100'

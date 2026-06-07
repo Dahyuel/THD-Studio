@@ -73,7 +73,7 @@ export default function Footer() {
                 <a
                   key={label}
                   href={href}
-                  className="font-poppins text-sm font-light text-white/40 hover:text-white transition-colors duration-300"
+                  className="font-poppins text-sm font-light text-white hover:text-white transition-colors duration-300"
                 >
                   {label}
                 </a>
@@ -91,7 +91,7 @@ export default function Footer() {
                 (s) => (
                   <span
                     key={s}
-                    className="font-poppins text-sm font-light text-white/40"
+                    className="font-poppins text-sm font-light text-white"
                   >
                     {s}
                   </span>
@@ -106,13 +106,19 @@ export default function Footer() {
               Social
             </p>
             <nav className="flex flex-col gap-3">
-              {['LinkedIn', 'Instagram', 'Facebook'].map((s) => (
+              {[
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/company/64627923' },
+                { label: 'Instagram', href: 'https://www.instagram.com/thdstudio.eg/' },
+                { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=100064107966174' }
+              ].map((s) => (
                 <a
-                  key={s}
-                  href="#"
-                  className="font-poppins text-sm font-light text-white/40 hover:text-white transition-colors duration-300"
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-poppins text-sm font-light text-white hover:text-white transition-colors duration-300"
                 >
-                  {s}
+                  {s.label}
                 </a>
               ))}
             </nav>
@@ -125,18 +131,18 @@ export default function Footer() {
             </p>
             <div className="flex flex-col gap-3">
               <a
-                href="mailto:hello@thd.com"
-                className="font-poppins text-sm font-light text-white/40 hover:text-white transition-colors duration-300"
+                href="mailto:Hello@THDstudio.net"
+                className="font-poppins text-sm font-light text-white hover:text-white transition-colors duration-300"
               >
-                hello@thd.com
+                Hello@THDstudio.net
               </a>
               <a
-                href="tel:+201234567890"
-                className="font-poppins text-sm font-light text-white/40 hover:text-white transition-colors duration-300"
+                href="tel:01006224062"
+                className="font-poppins text-sm font-light text-white hover:text-white transition-colors duration-300"
               >
-                +20 123 456 7890
+                0100 622 4062
               </a>
-              <span className="font-poppins text-sm text-white/40">
+              <span className="font-poppins text-sm text-white">
                 Cairo, Egypt
               </span>
             </div>
@@ -145,20 +151,20 @@ export default function Footer() {
 
         {/* ── Bottom bar ── */}
         <motion.div {...fade(0.3)}>
-          <div className="w-full h-px bg-white/[0.06] mb-8" />
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            {/* Logo mark */}
-            <div className="flex items-center gap-3">
-              <img
-                src="/modifiedlogo.png"
-                alt="THD Studio"
-                className="h-6 w-auto opacity-60"
-              />
-            </div>
-
-            {/* Copyright */}
-            <p className="font-poppins text-[0.6rem] tracking-[0.15em] text-white/20">
-              © {new Date().getFullYear()} THD Studio — All rights reserved
+          <div className="w-full h-px mb-8 opacity-40" style={{ background: 'linear-gradient(to right, transparent, #E2E61D, transparent)' }} />
+          <div className="flex items-center justify-center">
+            {/* Powered by */}
+            <p className="font-poppins text-sm tracking-[0.15em] text-white">
+              Powered by{' '}
+              <a
+                href="https://nilebyte.info/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold transition-colors duration-300 hover:opacity-80"
+                style={{ color: '#4285F4' }}
+              >
+                NileByte
+              </a>
             </p>
           </div>
         </motion.div>

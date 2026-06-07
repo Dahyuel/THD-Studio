@@ -26,7 +26,7 @@ export default function Hero({ onVideoReady }) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const [hoveredNav, setHoveredNav] = useState(null);
-  const [searchActive, setSearchActive] = useState(false);
+
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   // Update isMobile on resize
@@ -156,37 +156,12 @@ export default function Hero({ onVideoReady }) {
           })}
         </ul>
 
-        {/* Search */}
-        <div 
-          className="flex flex-col gap-1 group relative" 
-          style={{ width: '160px' }}
-        >
-          <div className="flex items-center justify-between">
-            <input
-              type="text"
-              placeholder="Search"
-              onFocus={() => setSearchActive(true)}
-              onBlur={() => setSearchActive(false)}
-              className={`bg-transparent outline-none font-poppins uppercase transition-colors duration-300 w-full 
-                ${searchActive ? 'text-[#E2E61D] placeholder:text-[#E2E61D]' : 'text-white/70 placeholder:text-white/70 group-hover:text-white group-hover:placeholder:text-white'}`}
-              style={{ fontSize: '0.8rem', letterSpacing: '0.1em', fontWeight: 500 }}
-            />
-            <svg 
-              width="14" height="14" viewBox="0 0 24 24" fill="none" 
-              stroke={searchActive ? '#E2E61D' : 'rgba(255,255,255,0.6)'} 
-              strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-              className={`flex-shrink-0 transition-colors duration-300 ${searchActive ? '' : 'group-hover:stroke-white'}`}
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="M21 21l-4.35-4.35" />
-            </svg>
-          </div>
-          <span className={`block w-full h-px transition-colors duration-300 ${searchActive ? 'bg-[#E2E61D]' : 'bg-white/50 group-hover:bg-white'}`} />
-        </div>
+        {/* Empty spacer to keep nav links centered */}
+        <div className="w-8" />
       </nav>
 
       {/* ── BOTTOM CONTENT ── */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 flex items-end justify-between px-10 pb-12">
+      <div className="absolute bottom-0 left-0 right-0 z-20 flex flex-col md:flex-row items-start md:items-end justify-between px-6 md:px-10 pb-6 md:pb-12 gap-6">
 
         {/* Left — headline + body */}
         <div className="max-w-xl pointer-events-none">
