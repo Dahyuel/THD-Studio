@@ -257,36 +257,15 @@ export const StaggeredMenu = ({
     }
   }, []);
 
-  const animateColor = useCallback(
-    opening => {
-      const btn = toggleBtnRef.current;
-      if (!btn) return;
-      colorTweenRef.current?.kill();
-      if (changeMenuColorOnOpen) {
-        const targetColor = opening ? openMenuButtonColor : menuButtonColor;
-        colorTweenRef.current = gsap.to(btn, {
-          color: targetColor,
-          delay: 0.18,
-          duration: 0.3,
-          ease: 'power2.out'
-        });
-      } else {
-        gsap.set(btn, { color: menuButtonColor });
-      }
-    },
-    [openMenuButtonColor, menuButtonColor, changeMenuColorOnOpen]
-  );
+  const [isHovered, setIsHovered] = useState(false);
 
-  useEffect(() => {
-    if (toggleBtnRef.current) {
-      if (changeMenuColorOnOpen) {
-        const targetColor = openRef.current ? openMenuButtonColor : menuButtonColor;
-        gsap.set(toggleBtnRef.current, { color: targetColor });
-      } else {
-        gsap.set(toggleBtnRef.current, { color: menuButtonColor });
-      }
+  const getButtonColor = () => {
+    const activeColor = open ? openMenuButtonColor : menuButtonColor;
+    if (isHovered && !open && activeColor !== '#000000') {
+      return '#ffffff';
     }
-  }, [changeMenuColorOnOpen, menuButtonColor, openMenuButtonColor]);
+    return activeColor;
+  };
 
   const animateText = useCallback(opening => {
     const inner = textInnerRef.current;
@@ -328,9 +307,8 @@ export const StaggeredMenu = ({
       playClose();
     }
     animateIcon(target);
-    animateColor(target);
     animateText(target);
-  }, [playOpen, playClose, animateIcon, animateColor, animateText, onMenuOpen, onMenuClose]);
+  }, [playOpen, playClose, animateIcon, animateText, onMenuOpen, onMenuClose]);
 
   const closeMenu = useCallback(() => {
     if (openRef.current) {
@@ -339,10 +317,9 @@ export const StaggeredMenu = ({
       onMenuClose?.();
       playClose();
       animateIcon(false);
-      animateColor(false);
       animateText(false);
     }
-  }, [playClose, animateIcon, animateColor, animateText, onMenuClose]);
+  }, [playClose, animateIcon, animateText, onMenuClose]);
 
   useEffect(() => {
     if (!closeOnClickAway || !open) return;
@@ -401,20 +378,13 @@ export const StaggeredMenu = ({
           <button
             ref={toggleBtnRef}
             className="sm-toggle"
+            style={{ color: getButtonColor(), transition: 'color 0.3s ease' }}
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             aria-controls="staggered-menu-panel"
             onClick={toggleMenu}
-            onMouseEnter={() => {
-              const targetColor = openRef.current ? openMenuButtonColor : menuButtonColor;
-              if (targetColor !== '#000000') {
-                gsap.to(toggleBtnRef.current, { color: '#ffffff', duration: 0.2 });
-              }
-            }}
-            onMouseLeave={() => {
-              const targetColor = openRef.current ? openMenuButtonColor : menuButtonColor;
-              gsap.to(toggleBtnRef.current, { color: targetColor, duration: 0.2 });
-            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
             type="button"
           >
             <span ref={textWrapRef} className="sm-toggle-textWrap font-poppins tracking-[0.1em] uppercase text-[0.8rem] mr-2" aria-hidden="true">
@@ -427,8 +397,8 @@ export const StaggeredMenu = ({
               </span>
             </span>
             <span ref={iconRef} className="sm-icon" aria-hidden="true">
-              <span ref={plusHRef} className="sm-icon-line" />
-              <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" />
+              <span ref={plusHRef} className="sm-icon-line" style={{ backgroundColor: getButtonColor(), transition: 'background-color 0.3s ease' }} />
+              <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" style={{ backgroundColor: getButtonColor(), transition: 'background-color 0.3s ease' }} />
             </span>
           </button>
         </div>

@@ -31,7 +31,7 @@ function App() {
       const isOverAbout = aboutSection && aboutSection.getBoundingClientRect().top <= checkY && aboutSection.getBoundingClientRect().bottom >= checkY;
       const isOverContact = contactSection && contactSection.getBoundingClientRect().top <= checkY && contactSection.getBoundingClientRect().bottom >= checkY;
 
-      setTheme(isOverContact ? 'light' : 'dark');
+      setTheme((isOverAbout || isOverContact) ? 'light' : 'dark');
     };
 
     handleScrollAndResize(); // Initial check
