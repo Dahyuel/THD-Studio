@@ -35,6 +35,14 @@ export const StaggeredMenu = ({
   const logoFilter = open 
     ? (isLight ? 'url(#colorize-green)' : 'brightness(0)')
     : (isLight ? 'brightness(0)' : 'url(#colorize-green)');
+
+  const getSocialHoverColor = (label) => {
+    const l = label.toLowerCase();
+    if (l.includes('linkedin')) return '#0A66C2';
+    if (l.includes('instagram')) return '#E4405F';
+    if (l.includes('facebook')) return '#1877F2';
+    return accentColor;
+  };
   const openRef = useRef(false);
   const panelRef = useRef(null);
   const preLayersRef = useRef(null);
@@ -449,7 +457,7 @@ export const StaggeredMenu = ({
                       rel="noopener noreferrer" 
                       className="sm-socials-link font-poppins text-[0.8rem] uppercase tracking-wider transition-colors"
                       style={{ color: textColor }}
-                      onMouseEnter={(e) => e.currentTarget.style.color = accentColor}
+                      onMouseEnter={(e) => e.currentTarget.style.color = getSocialHoverColor(s.label)}
                       onMouseLeave={(e) => e.currentTarget.style.color = textColor}
                     >
                       {s.label}

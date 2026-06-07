@@ -107,16 +107,18 @@ export default function Footer() {
             </p>
             <nav className="flex flex-col gap-3">
               {[
-                { label: 'LinkedIn', href: 'https://www.linkedin.com/company/64627923' },
-                { label: 'Instagram', href: 'https://www.instagram.com/thdstudio.eg/' },
-                { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=100064107966174' }
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/company/64627923', hoverColor: '#0A66C2' },
+                { label: 'Instagram', href: 'https://www.instagram.com/thdstudio.eg/', hoverColor: '#E4405F' },
+                { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=100064107966174', hoverColor: '#1877F2' }
               ].map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-poppins text-sm font-light text-white hover:text-white transition-colors duration-300"
+                  className="font-poppins text-sm font-light text-white transition-colors duration-300"
+                  onMouseEnter={(e) => e.currentTarget.style.color = s.hoverColor}
+                  onMouseLeave={(e) => e.currentTarget.style.color = ''}
                 >
                   {s.label}
                 </a>
