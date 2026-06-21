@@ -56,7 +56,7 @@ export default function ProjectModal({ project, onClose }) {
           </button>
 
           {/* Main media */}
-          <div className="relative aspect-[4/3] md:aspect-[16/9] overflow-hidden">
+          <div className="relative w-full h-[50vh] sm:h-[60vh] md:h-[70vh] bg-black/60 flex items-center justify-center overflow-hidden">
             <AnimatePresence mode="wait">
               {images[currentImg] && (images[currentImg].endsWith('.mp4') || images[currentImg].endsWith('.webm')) ? (
                 <motion.video
@@ -71,7 +71,7 @@ export default function ProjectModal({ project, onClose }) {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.4 }}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               ) : (
                 <motion.img
@@ -82,7 +82,7 @@ export default function ProjectModal({ project, onClose }) {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.4 }}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               )}
             </AnimatePresence>
